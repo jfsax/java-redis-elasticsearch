@@ -3,6 +3,7 @@ package com.javai.app.controller;
 import com.javai.app.dao.ProdutoDAO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 
 public class ProdutoController {
     @Autowired
@@ -15,4 +16,10 @@ public class ProdutoController {
      * if (busca == postgres) ajsdsadsa
      * if (busca == elasticsearch) ajsdsadsa
      */
+
+    // @GetMapping("/produtos")
+    // public String showUserList(Produto produto) {
+    // produto.addAttribute("users", userRepository.findAll());
+    // return "index";
+    // }
 }

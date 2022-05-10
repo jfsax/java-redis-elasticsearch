@@ -6,16 +6,20 @@ import com.javai.app.services.Redis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class ClienteController {
     @Autowired
     private ClienteDAO dao;
+
+    // TODO: arrumar essa bagunca sos
 
     Redis redis = new Redis();
 
@@ -52,10 +56,26 @@ public class ClienteController {
         }
     }
 
-    @PostMapping("/clientes")
-    public ResponseEntity<?> cadastrarCliente(@RequestBody Cliente c) {
-        Cliente cliente = dao.save(c);
+    @GetMapping("/cadastro")
+    public String cadastro(Cliente cliente) {
+        return "cadastro";
+    }
 
+    @GetMapping("/clientes")
+    public String showUserList(Model model) {
+        model.addAttribute("clientes", dao.findAll());
+        return "clientes";
+    }
+
+    @PostMapping("/clientes")
+    public String cadastrarCliente(@Validated Cliente cliente, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "cadastro";
+        }
+
+        dao.save(cliente);
+
+        return "redirect:/clientes";
         // String key = "cliente";
         // String email = cliente.getEmail();
 
@@ -63,6 +83,5 @@ public class ClienteController {
 
         // String value = redis.read(key);
         // System.out.println("Lendo valor do Cache: " + value);
-        return ResponseEntity.ok(cliente);
     }
 }
