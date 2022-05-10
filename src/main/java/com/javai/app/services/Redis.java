@@ -21,10 +21,6 @@ public class Redis {
         return jedis.get(key);
     }
 
-    // public Map<String, String> readAll(String key) {
-    // return jedis.hgetAll(key);
-    // }
-
     public void publish(String channel, String message) {
         jedis.publish(channel, message);
     }

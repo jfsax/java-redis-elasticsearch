@@ -21,27 +21,36 @@ public class ClienteController {
 
     @GetMapping("/clientes/{email}")
     public ResponseEntity<?> buscarClientes(@PathVariable String email) {
-        String key = "cliente";
-
         Cliente cliente;
 
-        if (redis.read(key) != null) {
+        if (redis.read("email") != null) {
+            System.out.println("from redis");
+
             cliente = new Cliente();
-            cliente.setEmail(redis.read(key));
+
+            cliente.setId(Integer.parseInt(redis.read("id")));
+            cliente.setNome(redis.read("nome"));
+            cliente.setEmail(redis.read("email"));
+
+            System.out.println("ID: " + cliente.getId() + "\n"
+                    + "Nome: " + cliente.getNome() + "\n"
+                    + "Email: " + cliente.getEmail() + "\n");
         } else {
+            System.out.println("from bd");
+
             cliente = dao.findByEmail(email);
 
-            redis.write(key, cliente.getEmail(), 120);
+            redis.write("id", cliente.getId().toString(), 120);
+            redis.write("nome", cliente.getNome(), 120);
+            redis.write("email", cliente.getEmail(), 120);
         }
-
-        // redis retorna apenas o email por enquanto
 
         return ResponseEntity.ok(cliente);
     }
 
     @PostMapping("/clientes")
-    public ResponseEntity<?> cadastrarCliente(@RequestBody Cliente cliente) {
-        dao.save(cliente);
+    public ResponseEntity<?> cadastrarCliente(@RequestBody Cliente c) {
+        Cliente cliente = dao.save(c);
 
         // String key = "cliente";
         // String email = cliente.getEmail();

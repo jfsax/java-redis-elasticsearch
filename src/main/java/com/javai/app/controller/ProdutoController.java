@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class ProdutoController {
     @Autowired
     private ProdutoDAO dao;
-    // elasticsearch
+    // TODO: elasticsearch
     // post - cadastrar em postgres e elasticsearch
 
     /*
