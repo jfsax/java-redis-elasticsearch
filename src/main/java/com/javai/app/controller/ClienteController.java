@@ -1,7 +1,5 @@
 package com.javai.app.controller;
 
-import java.util.List;
-
 import com.javai.app.dao.ClienteDAO;
 import com.javai.app.model.Cliente;
 import com.javai.app.services.Redis;
@@ -23,8 +21,20 @@ public class ClienteController {
 
     @GetMapping("/clientes/{email}")
     public ResponseEntity<?> buscarClientes(@PathVariable String email) {
-        var key = "cliente";
-        var cliente = redis.read(key) != null ? redis.read(key) : dao.findByEmail(email);
+        String key = "cliente";
+
+        Cliente cliente;
+
+        if (redis.read(key) != null) {
+            cliente = new Cliente();
+            cliente.setEmail(redis.read(key));
+        } else {
+            cliente = dao.findByEmail(email);
+
+            redis.write(key, cliente.getEmail(), 120);
+        }
+
+        // redis retorna apenas o email por enquanto
 
         return ResponseEntity.ok(cliente);
     }
@@ -33,15 +43,13 @@ public class ClienteController {
     public ResponseEntity<?> cadastrarCliente(@RequestBody Cliente cliente) {
         dao.save(cliente);
 
-        String key = "cliente";
-        String email = cliente.getEmail();
+        // String key = "cliente";
+        // String email = cliente.getEmail();
 
-        redis.write(key, email, 120);
+        // redis.write(key, email, 120);
 
-        String value = redis.read(key);
-        System.out.println("Lendo valor do Cache: " + value);
-
-        redis.close();
+        // String value = redis.read(key);
+        // System.out.println("Lendo valor do Cache: " + value);
         return ResponseEntity.ok(cliente);
     }
 }
