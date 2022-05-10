@@ -12,7 +12,7 @@ public class Redis {
     }
 
     public void write(String key, String value, long expireInSecconds) {
-        var params = new SetParams();
+        SetParams params = new SetParams();
         params.ex(expireInSecconds);
         jedis.set(key, value, params);
     }
