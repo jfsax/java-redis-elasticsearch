@@ -23,29 +23,33 @@ public class ClienteController {
     public ResponseEntity<?> buscarClientes(@PathVariable String email) {
         Cliente cliente;
 
-        if (redis.read("email") != null) {
-            System.out.println("from redis");
+        try {
+            if (redis.read("email") != null) {
+                System.out.println("from redis");
 
-            cliente = new Cliente();
+                cliente = new Cliente();
 
-            cliente.setId(Integer.parseInt(redis.read("id")));
-            cliente.setNome(redis.read("nome"));
-            cliente.setEmail(redis.read("email"));
+                cliente.setId(Integer.parseInt(redis.read("id")));
+                cliente.setNome(redis.read("nome"));
+                cliente.setEmail(redis.read("email"));
 
-            System.out.println("ID: " + cliente.getId() + "\n"
-                    + "Nome: " + cliente.getNome() + "\n"
-                    + "Email: " + cliente.getEmail() + "\n");
-        } else {
-            System.out.println("from bd");
+                System.out.println("ID: " + cliente.getId() + "\n"
+                        + "Nome: " + cliente.getNome() + "\n"
+                        + "Email: " + cliente.getEmail() + "\n");
+            } else {
+                System.out.println("from bd");
 
-            cliente = dao.findByEmail(email);
+                cliente = dao.findByEmail(email);
 
-            redis.write("id", cliente.getId().toString(), 120);
-            redis.write("nome", cliente.getNome(), 120);
-            redis.write("email", cliente.getEmail(), 120);
+                redis.write("id", cliente.getId().toString(), 120);
+                redis.write("nome", cliente.getNome(), 120);
+                redis.write("email", cliente.getEmail(), 120);
+            }
+
+            return ResponseEntity.ok(cliente);
+        } catch (Exception ex) {
+            return ResponseEntity.status(500).body("Um erro ocorreu. - " + ex.getMessage());
         }
-
-        return ResponseEntity.ok(cliente);
     }
 
     @PostMapping("/clientes")
