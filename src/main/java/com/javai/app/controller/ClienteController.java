@@ -23,7 +23,7 @@ public class ClienteController {
     Redis redis = new Redis();
 
     @GetMapping("/cliente/{id}")
-    public String buscarCliente(@PathVariable("id") String id, Model model) {
+    public String buscarCliente(@PathVariable("id") int id, Model model) {
         Cliente cliente;
 
         try {
@@ -42,7 +42,7 @@ public class ClienteController {
             } else {
                 System.out.println("from bd");
 
-                cliente = dao.findById(Integer.parseInt(id));
+                cliente = dao.findById(id);
 
                 redis.write("id", cliente.getId().toString(), 30);
                 redis.write("nome", cliente.getNome(), 30);
@@ -69,7 +69,7 @@ public class ClienteController {
 
     @PostMapping("/clientes")
     public String cadastrarCliente(@Validated Cliente cliente, BindingResult result, Model model) {
-        if (result.hasErrors()) {
+        if (result.hasErrors() || cliente.getEmail().isEmpty()) {
             return "cadastro";
         }
 

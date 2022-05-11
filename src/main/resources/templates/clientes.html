@@ -24,7 +24,7 @@
 <body>
     <div th:switch="${clientes}" class="content">
         <h2 th:case="null">Nenhum cliente ainda!</h2>
-        <div th:case="*">
+        <div th:case="*" class="container">
             <h1>Clientes</h1>
             <table>
                 <thead>
@@ -44,7 +44,9 @@
                     </tr>
                 </tbody>
             </table>
-            <button><a href="/cadastro">Adicione um novo cliente</a></button>
+            <div class="btn-c">
+                <button><a href="/cadastro">Adicione um novo cliente</a></button>
+            </div>
         </div>
     </div>
 </body>

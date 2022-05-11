@@ -7,24 +7,44 @@
     <link th:href="@{/styles/main.css}" rel="stylesheet" />
 </head>
 
+<script>
+    function empty() {
+        const inputNome = document.getElementById("nome");
+        const inputEmail = document.getElementById("email");
+
+        if (inputNome.value == "" || inputNome.value == null) {
+            inputNome.classList = "error";
+        } else {
+            inputNome.classList = "";
+        }
+
+        if (inputEmail.value == "" || inputEmail.value == null) {
+            inputEmail.classList = "error";
+        } else {
+            inputEmail.classList = "";
+        }
+    }
+</script>
+
 <body>
     <div class="content">
-        <div>
+        <div class="container">
             <h1>Cadastre um cliente</h1>
             <form action="#" th:action="@{/clientes}" th:object="${cliente}" method="post">
-                <div>
-                    <label for="name">Nome</label>
-                    <input type="text" th:field="*{nome}" id="nome" placeholder="Nome">
+                <div class="form-input">
+                    <label for="name" id="label-nome">Nome</label>
+                    <input type="text" th:field="*{nome}" id="nome" placeholder="Nome" required>
                     <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
                 </div>
 
-                <div>
-                    <label for="email">Email</label>
-                    <input type="text" th:field="*{email}" id="email" placeholder="Email">
+                <div class="form-input">
+                    <label for="email" id="label-email">Email</label>
+                    <input type="text" th:field="*{email}" id="email" placeholder="email@mail.com" required>
                     <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
                 </div>
 
-                <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+                <p><input type="submit" value="Submit" onclick="return empty()" /> <input type="reset" value="Reset" />
+                </p>
             </form>
             <button><a href="/clientes">Retornar para lista de clientes</a></button>
         </div>
