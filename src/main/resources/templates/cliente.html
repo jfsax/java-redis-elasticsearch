@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <title>Cliente</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+    <div th:object="${cliente}">
+        <!-- <h2 th:case="null">O cliente não existe</h2> -->
+        <div>
+            <h2>Clientes</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <!-- <th>Edit</th> -->
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td th:text="${cliente.nome}"></td>
+                        <td th:text="${cliente.email}"></td>
+                        <!-- <td><a th:href="@{/cliente/{id}(id=${cliente.id})}">Edit</a></td> -->
+                        <td><a th:href="@{/delete/{id}(id=${cliente.id})}">excluir</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p><a href="/cadastro">Adicione um novo cliente</a></p>
+        <p><a href="/clientes">Retornar para lista de clientes</a></p>
+    </div>
+</body>
+
+</html>

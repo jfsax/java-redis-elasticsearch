@@ -1,5 +1,7 @@
 package com.javai.app.controller;
 
+import java.util.Optional;
+
 import com.javai.app.dao.ClienteDAO;
 import com.javai.app.model.Cliente;
 import com.javai.app.services.Redis;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,12 +26,12 @@ public class ClienteController {
 
     Redis redis = new Redis();
 
-    @GetMapping("/clientes/{email}")
-    public ResponseEntity<?> buscarClientes(@PathVariable String email) {
+    @GetMapping("/cliente/{id}")
+    public String buscarCliente(@PathVariable String id, Model model) {
         Cliente cliente;
 
         try {
-            if (redis.read("email") != null) {
+            if (redis.read("id") != null) {
                 System.out.println("from redis");
 
                 cliente = new Cliente();
@@ -43,16 +46,17 @@ public class ClienteController {
             } else {
                 System.out.println("from bd");
 
-                cliente = dao.findByEmail(email);
+                cliente = dao.findById(Integer.parseInt(id));
 
                 redis.write("id", cliente.getId().toString(), 120);
                 redis.write("nome", cliente.getNome(), 120);
                 redis.write("email", cliente.getEmail(), 120);
             }
 
-            return ResponseEntity.ok(cliente);
+            model.addAttribute("cliente", cliente);
+            return "cliente";
         } catch (Exception ex) {
-            return ResponseEntity.status(500).body("Um erro ocorreu. - " + ex.getMessage());
+            return "redirect:/error";
         }
     }
 
@@ -62,7 +66,7 @@ public class ClienteController {
     }
 
     @GetMapping("/clientes")
-    public String showUserList(Model model) {
+    public String exibirClientes(Model model) {
         model.addAttribute("clientes", dao.findAll());
         return "clientes";
     }
@@ -76,12 +80,15 @@ public class ClienteController {
         dao.save(cliente);
 
         return "redirect:/clientes";
-        // String key = "cliente";
-        // String email = cliente.getEmail();
-
-        // redis.write(key, email, 120);
-
-        // String value = redis.read(key);
-        // System.out.println("Lendo valor do Cache: " + value);
     }
+
+    @GetMapping("/delete/{id}")
+    public String excluirCliente(@PathVariable("id") Integer id, Model model) {
+        Cliente cliente = dao.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+
+        dao.delete(cliente);
+
+        return "redirect:/clientes";
+    };
 }
