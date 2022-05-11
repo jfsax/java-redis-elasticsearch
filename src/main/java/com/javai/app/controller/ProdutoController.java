@@ -3,7 +3,6 @@ package com.javai.app.controller;
 import com.javai.app.dao.ProdutoDAO;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 
 public class ProdutoController {
     @Autowired
