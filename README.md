@@ -1,6 +1,5 @@
-# java-redis-elasticsearch
+# PROJETO EM ANDAMENTO
 
-## antes de executar
 antes de executar o projeto, instale:
 - <a href="https://www.oracle.com/java/technologies/downloads/">java</a>
 - <a href="https://maven.apache.org/download.cgi">maven</a>
