@@ -8,6 +8,12 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+h1 {
+    font-family: sans-serif;
+    font-size: 1.5em;
+    text-transform: uppercase;
+}
+
 .content {
     display: flex;
     flex-direction: column;
@@ -35,6 +41,11 @@ a {
 
 a:hover {
     color: brown;
+}
+
+table {
+    width: 100%;
+    text-align: left;
 }
 
 form {
@@ -65,12 +76,6 @@ button {
     text-align: center;
     font-size: 0.9em;
     font-family: Arial;
-}
-
-h1 {
-    font-family: sans-serif;
-    font-size: 1.5em;
-    text-transform: uppercase;
 }
 
 p {
