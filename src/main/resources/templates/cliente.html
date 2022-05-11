@@ -15,6 +15,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Nome</th>
                         <th>Email</th>
                         <!-- <th>Edit</th> -->
@@ -23,6 +24,7 @@
                 </thead>
                 <tbody>
                     <tr>
+                        <td th:text="${cliente.id}"></td>
                         <td th:text="${cliente.nome}"></td>
                         <td th:text="${cliente.email}"></td>
                         <!-- <td><a th:href="@{/cliente/{id}(id=${cliente.id})}">Edit</a></td> -->
@@ -30,8 +32,8 @@
                     </tr>
                 </tbody>
             </table>
-            <button><a href="/cadastro">Adicione um novo cliente</a></button>
-            <button><a href="/clientes">Retornar para lista de clientes</a></button>
+            <a href="/cadastro"><button>Adicionar um novo cliente</button></a>
+            <a href="/clientes"><button>Retornar para lista de clientes</button></a>
         </div>
     </div>
 </body>

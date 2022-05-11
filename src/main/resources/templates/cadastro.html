@@ -43,10 +43,12 @@
                     <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
                 </div>
 
-                <p><input type="submit" value="Submit" onclick="return empty()" /> <input type="reset" value="Reset" />
-                </p>
+                <div style="display: flex; gap: 20px;">
+                    <button type="submit" value="Submit" onclick="return empty()">Submit</button>
+                    <button type="reset" value="Reset">Reset</button>
+                </div>
             </form>
-            <button><a href="/clientes">Retornar para lista de clientes</a></button>
+            <a href="/clientes"><button>Retornar para lista de clientes</button></a>
         </div>
     </div>
 </body>

@@ -29,24 +29,24 @@
             <table>
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Nome</th>
                         <th>Email</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="cliente : ${clientes}">
-                        <!-- <td th:text="${cliente.nome}" style="cursor: pointer"
-                            onclick="rowClicked(this.getAttribute('cliente.id'))">
-                        </td> -->
-                        <td><a th:text="${cliente.nome}" th:href="@{/cliente/{id}(id=${cliente.id})}"></a>
+                        <td th:text="${cliente.id}"></td>
+                        <td>
+                            <a th:text="${cliente.nome}" th:href="@{/cliente/{id}(id=${cliente.id})}"></a>
                         </td>
                         <td th:text="${cliente.email}"></td>
                     </tr>
                 </tbody>
             </table>
-            <div class="btn-c">
-                <button><a href="/cadastro">Adicione um novo cliente</a></button>
-            </div>
+            <!-- <div class="btn-c"> -->
+            <a href="/cadastro"><button>Adicionar um novo cliente</button></a>
+            <!-- </div> -->
         </div>
     </div>
 </body>
