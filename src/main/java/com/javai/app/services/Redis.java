@@ -11,6 +11,10 @@ public class Redis {
         jedis = new Jedis("http://localhost:6379");
     }
 
+    public boolean exists(String key) {
+        return jedis.exists(key);
+    }
+
     public void write(String key, String value, long expireInSecconds) {
         SetParams params = new SetParams();
         params.ex(expireInSecconds);

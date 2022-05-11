@@ -12,6 +12,7 @@
 <head>
     <title>Clientes</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link th:href="@{/styles/main.css}" rel="stylesheet" />
 </head>
 
 <script>
@@ -21,10 +22,10 @@
 </script>
 
 <body>
-    <div th:switch="${clientes}">
+    <div th:switch="${clientes}" class="content">
         <h2 th:case="null">Nenhum cliente ainda!</h2>
         <div th:case="*">
-            <h2>Clientes</h2>
+            <h1>Clientes</h1>
             <table>
                 <thead>
                     <tr>
@@ -43,8 +44,8 @@
                     </tr>
                 </tbody>
             </table>
+            <button><a href="/cadastro">Adicione um novo cliente</a></button>
         </div>
-        <p><a href="/cadastro">Adicione um novo cliente</a></p>
     </div>
 </body>
 

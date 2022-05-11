@@ -4,10 +4,11 @@
 <head>
     <title>Cliente</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link th:href="@{/styles/main.css}" rel="stylesheet" />
 </head>
 
 <body>
-    <div th:object="${cliente}">
+    <div th:object="${cliente}" class="content">
         <!-- <h2 th:case="null">O cliente não existe</h2> -->
         <div>
             <h2>Clientes</h2>
@@ -29,9 +30,9 @@
                     </tr>
                 </tbody>
             </table>
+            <button><a href="/cadastro">Adicione um novo cliente</a></button>
+            <button><a href="/clientes">Retornar para lista de clientes</a></button>
         </div>
-        <p><a href="/cadastro">Adicione um novo cliente</a></p>
-        <p><a href="/clientes">Retornar para lista de clientes</a></p>
     </div>
 </body>
 

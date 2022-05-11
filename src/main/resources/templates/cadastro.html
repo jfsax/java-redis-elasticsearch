@@ -4,21 +4,31 @@
 <head>
     <title>Cadastro</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link th:href="@{/styles/main.css}" rel="stylesheet" />
 </head>
 
 <body>
-    <h1>Cadastre um cliente</h1>
-    <form action="#" th:action="@{/clientes}" th:object="${cliente}" method="post">
-        <label for="name">Nome</label>
-        <input type="text" th:field="*{nome}" id="nome" placeholder="Nome">
-        <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+    <div class="content">
+        <div>
+            <h1>Cadastre um cliente</h1>
+            <form action="#" th:action="@{/clientes}" th:object="${cliente}" method="post">
+                <div>
+                    <label for="name">Nome</label>
+                    <input type="text" th:field="*{nome}" id="nome" placeholder="Nome">
+                    <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+                </div>
 
-        <label for="email">Email</label>
-        <input type="text" th:field="*{email}" id="email" placeholder="Email">
-        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                <div>
+                    <label for="email">Email</label>
+                    <input type="text" th:field="*{email}" id="email" placeholder="Email">
+                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                </div>
 
-        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
-    </form>
+                <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+            </form>
+            <button><a href="/clientes">Retornar para lista de clientes</a></button>
+        </div>
+    </div>
 </body>
 
 </html>

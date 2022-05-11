@@ -23,7 +23,7 @@ public class ClienteController {
     Redis redis = new Redis();
 
     @GetMapping("/cliente/{id}")
-    public String buscarCliente(@PathVariable String id, Model model) {
+    public String buscarCliente(@PathVariable("id") String id, Model model) {
         Cliente cliente;
 
         try {
@@ -44,9 +44,9 @@ public class ClienteController {
 
                 cliente = dao.findById(Integer.parseInt(id));
 
-                redis.write("id", cliente.getId().toString(), 120);
-                redis.write("nome", cliente.getNome(), 120);
-                redis.write("email", cliente.getEmail(), 120);
+                redis.write("id", cliente.getId().toString(), 30);
+                redis.write("nome", cliente.getNome(), 30);
+                redis.write("email", cliente.getEmail(), 30);
             }
 
             model.addAttribute("cliente", cliente);
