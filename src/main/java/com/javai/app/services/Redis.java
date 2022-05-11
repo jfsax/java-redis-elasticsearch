@@ -21,6 +21,10 @@ public class Redis {
         jedis.set(key, value, params);
     }
 
+    public void flushAll() {
+        jedis.flushAll();
+    }
+
     public String read(String key) {
         return jedis.get(key);
     }

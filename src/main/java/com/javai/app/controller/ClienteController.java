@@ -25,25 +25,22 @@ public class ClienteController {
     @GetMapping("/cliente/{id}")
     public String buscarCliente(@PathVariable("id") int id, Model model) {
         Cliente cliente;
+        String clienteId = redis.read("id");
 
         try {
-            if (redis.read("id") != null) {
-                System.out.println("from redis");
+            if (clienteId != null && Integer.parseInt(clienteId) == id) {
+                System.out.println("redis");
 
                 cliente = new Cliente();
-
                 cliente.setId(Integer.parseInt(redis.read("id")));
                 cliente.setNome(redis.read("nome"));
                 cliente.setEmail(redis.read("email"));
-
-                System.out.println("ID: " + cliente.getId() + "\n"
-                        + "Nome: " + cliente.getNome() + "\n"
-                        + "Email: " + cliente.getEmail() + "\n");
             } else {
-                System.out.println("from bd");
+                System.out.println("postgres");
 
                 cliente = dao.findById(id);
 
+                redis.flushAll();
                 redis.write("id", cliente.getId().toString(), 30);
                 redis.write("nome", cliente.getNome(), 30);
                 redis.write("email", cliente.getEmail(), 30);
@@ -52,6 +49,7 @@ public class ClienteController {
             model.addAttribute("cliente", cliente);
             return "cliente";
         } catch (Exception ex) {
+            System.out.println(ex.getLocalizedMessage());
             return "redirect:/error";
         }
     }
