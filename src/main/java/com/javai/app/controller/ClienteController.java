@@ -25,25 +25,22 @@ public class ClienteController {
     @GetMapping("/cliente/{id}")
     public String buscarCliente(@PathVariable int id, Model model) {
         Cliente cliente;
-        String clienteId = redis.read("id");
+        String idCliente = "cliente_id_" + id;
+        String nomeCliente = "cliente_nome_" + id;
+        String emailCliente = "cliente_email_" + id;
 
         try {
-            if (clienteId != null && Integer.parseInt(clienteId) == id) {
-                System.out.println("redis");
-
+            if (redis.read(idCliente) != null) {
                 cliente = new Cliente();
-                cliente.setId(Integer.parseInt(redis.read("id")));
-                cliente.setNome(redis.read("nome"));
-                cliente.setEmail(redis.read("email"));
+                cliente.setId(Integer.parseInt(redis.read(idCliente)));
+                cliente.setNome(redis.read(nomeCliente));
+                cliente.setEmail(redis.read(emailCliente));
             } else {
-                System.out.println("postgres");
-
                 cliente = dao.findById(id);
 
-                // redis.flushAll();
-                redis.write("id", cliente.getId().toString(), 30);
-                redis.write("nome", cliente.getNome(), 30);
-                redis.write("email", cliente.getEmail(), 30);
+                redis.write(idCliente, cliente.getId().toString(), 30);
+                redis.write(nomeCliente, cliente.getNome(), 30);
+                redis.write(emailCliente, cliente.getEmail(), 30);
             }
 
             model.addAttribute("cliente", cliente);
