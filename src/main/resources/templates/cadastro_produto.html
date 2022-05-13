@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <title>Cadastro</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link th:href="@{/styles/main.css}" rel="stylesheet" />
+</head>
+
+<script>
+    function empty() {
+        const inputNome = document.getElementById("nome");
+        const inputPreco = document.getElementById("preco");
+
+        if (inputNome.value == "" || inputNome.value == null) {
+            inputNome.classList = "error";
+        } else {
+            inputNome.classList = "";
+        }
+
+        if (inputPreco.value == "" || inputPreco.value == null) {
+            inputPreco.classList = "error";
+        } else {
+            inputPreco.classList = "";
+        }
+    }
+</script>
+
+<body>
+    <div class="content">
+        <div class="container">
+            <h1>Cadastre um produto</h1>
+            <form action="#" th:action="@{/produtos}" th:object="${produto}" method="post">
+                <div class="form-input">
+                    <label for="name" id="label-nome">Nome</label>
+                    <input type="text" th:field="*{nome}" id="nome" placeholder="Nome" required>
+                    <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+                </div>
+
+                <div class="form-input">
+                    <label for="descricao" id="label-descricao">Descrição</label>
+                    <input type="text" th:field="*{descricao}" id="preco" placeholder="Sua descricao">
+                    <span th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}"></span>
+                </div>
+
+                <div class="form-input">
+                    <label for="preco" id="label-preco">Preço</label>
+                    <input type="text" th:field="*{preco}" id="preco" placeholder="12.50" required>
+                    <span th:if="${#fields.hasErrors('preco')}" th:errors="*{preco}"></span>
+                </div>
+
+                <div style="display: flex; gap: 20px;">
+                    <button type="submit" value="Submit" onclick="return empty()">Submit</button>
+                    <button type="reset" value="Reset">Reset</button>
+                </div>
+            </form>
+            <a href="/produtos"><button>Retornar para lista de produtos</button></a>
+        </div>
+    </div>
+</body>
+
+</html>

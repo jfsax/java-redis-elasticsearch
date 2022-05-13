@@ -25,15 +25,7 @@ public class Produto {
     @Column(name = "preco", nullable = false)
     private Double preco;
 
-    // @ManyToOne // esta anotação indica que há uma relação N:1 com Departamento
-    // @JoinColumn(name = "num_depto") // como o nome da coluna que é FK é diferente
-    // do nome da PK de Departamento,
-    // // então preciso explicitar
-    // @JsonIgnoreProperties("listaProdutos")
-    // private Departamento depto;
-
     public Produto() {
-        // nao faz nadica de nada!!!
     }
 
     public Produto(Integer codigo, String nome, String descricao, Double preco) {
@@ -42,10 +34,6 @@ public class Produto {
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
-        // this.depto = new Departamento();
-        // this.depto.setNumero(numeroDepto);
-        // this.depto.setNome(nomeDepto);
-        // this.depto.setAndar(andarDepto);
     }
 
     public Integer getCodigo() {

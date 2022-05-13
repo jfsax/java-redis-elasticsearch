@@ -1,29 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="https://www.thymeleaf.org">
 
 <head>
-    <meta charset="ISO-8859-1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Produtos</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link th:href="@{/styles/main.css}" rel="stylesheet" />
 </head>
 
+<script>
+    function rowClicked(value) {
+        location.href = "/produto/" + value;
+    }
+</script>
+
 <body>
-    <div align="center">
-        <table>
-            <thead>
-                <tr>
-                    <th th:text="#{msgs.headers.name}">Name</th>
-                    <th th:text="#{msgs.headers.price}">Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="prod: ${allProducts}">
-                    <td th:text="${prod.name}">Oranges</td>
-                    <td th:text="${#numbers.formatDecimal(prod.price, 1, 2)}">0.99</td>
-                </tr>
-            </tbody>
-        </table>
+    <div th:switch="${produtos}" class="content">
+        <h2 th:case="null">Nenhum produto ainda!</h2>
+        <div th:case="*" class="container">
+            <h1>Produtos</h1>
+            <div>
+                <input type="radio" name="pesquisa" id="postgres">
+                <label for="postgres">postgres</label>
+                <input type="radio" name="pesquisa" id="elasticsearch">
+                <label for="elasticsearch">elasticsearch</label>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Codigo</th>
+                        <th>Nome</th>
+                        <th>Descricao</th>
+                        <th>Preco</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="produto : ${produtos}">
+                        <td th:text="${produto.codigo}"></td>
+                        <td>
+                            <a th:text="${produto.nome}" th:href="@{/produto/{codigo}(codigo=${produto.codigo})}"></a>
+                        </td>
+                        <td th:text="${produto.descricao}"></td>
+                        <td th:text="${produto.preco}"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- <div class="btn-c"> -->
+            <a href="/cadastro_produto"><button>Adicionar um novo produto</button></a>
+            <!-- </div> -->
+        </div>
     </div>
 </body>
 

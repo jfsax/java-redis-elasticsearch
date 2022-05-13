@@ -40,7 +40,7 @@ public class ClienteController {
 
                 cliente = dao.findById(id);
 
-                redis.flushAll();
+                // redis.flushAll();
                 redis.write("id", cliente.getId().toString(), 30);
                 redis.write("nome", cliente.getNome(), 30);
                 redis.write("email", cliente.getEmail(), 30);
