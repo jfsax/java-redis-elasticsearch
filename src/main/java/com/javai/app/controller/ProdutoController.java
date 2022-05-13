@@ -1,6 +1,7 @@
 package com.javai.app.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import com.javai.app.dao.ProdutoDAO;
 import com.javai.app.model.Produto;
@@ -45,8 +46,12 @@ public class ProdutoController {
     }
 
     @GetMapping("/produtos")
-    public String buscarProdutos(Model model) {
-        
+    public String buscarProdutos(Model model) throws IOException {
+        List<Produto> produtos = RestService.getList();
+        for (Produto p : produtos) {
+            System.out.println(p.getNome());
+        }
+
         model.addAttribute("produtos", dao.findAll());
         return "produtos";
     }

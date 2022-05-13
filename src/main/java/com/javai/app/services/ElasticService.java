@@ -15,16 +15,14 @@ import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import co.elastic.clients.transport.ElasticsearchTransport;
 import co.elastic.clients.transport.rest_client.RestClientTransport;
 
-public class ElasticSearch {
-    public static void get() {
+public class ElasticService {
+    public static void get() throws ElasticsearchException, IOException {
         RestClient restClient = RestClient.builder(
                 new HttpHost("localhost", 9200)).build();
 
-        // Create the transport with a Jackson mapper
-        ElasticsearchTransport transport = new RestClientTransport(
-                restClient, new JacksonJsonpMapper());
+        var restClientTransport = new RestClientTransport(restClient, new JacksonJsonpMapper());
+        ElasticsearchTransport transport = restClientTransport;
 
-        // And create the API client
         ElasticsearchClient client = new ElasticsearchClient(transport);
 
         // SearchResponse<Product> search = client.search(s -> s
@@ -32,18 +30,14 @@ public class ElasticSearch {
         // .query(q -> q
         // .term(t -> t
         // .field("name")
-        // .value(v -> v.stringValue("banana")))),
+        // .value(v -> v.stringValue("banana"))
+        // )),
         // Product.class);
 
-        try {
-            SearchResponse<Produto> search = client.search(s -> s.index("produtos"), Produto.class);
+        SearchResponse<Produto> search = client.search(s -> s.index("produtos"), Produto.class);
 
-            for (Hit<Produto> hit : search.hits().hits()) {
-                processarProduto(hit.source());
-            }
-        } catch (ElasticsearchException | IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        for (Hit<Produto> hit : search.hits().hits()) {
+            processarProduto(hit.source());
         }
     }
 
@@ -51,7 +45,6 @@ public class ElasticSearch {
         System.out.println("-------------------------------");
         System.out.println("Nome: " + produto.getNome());
         System.out.println("Descricao: " + produto.getDescricao());
-        System.out.println("Preco: " + produto.getPreco());
         System.out.println("-------------------------------");
     }
 }
