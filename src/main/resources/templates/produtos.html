@@ -18,8 +18,8 @@
         <h2 th:case="null">Nenhum produto ainda!</h2>
         <div th:case="*" class="container">
             <h1>Produtos</h1>
-            <div>
-                <input type="radio" name="pesquisa" id="postgres">
+            <div style="margin-bottom: 15px;">
+                <input type="radio" name="pesquisa" id="postgres" checked>
                 <label for="postgres">postgres</label>
                 <input type="radio" name="pesquisa" id="elasticsearch">
                 <label for="elasticsearch">elasticsearch</label>
@@ -46,6 +46,7 @@
             </table>
             <!-- <div class="btn-c"> -->
             <a href="/cadastro_produto"><button>Adicionar um novo produto</button></a>
+            <a href="/clientes"><button>Visualizar lista de clientes</button></a>
             <!-- </div> -->
         </div>
     </div>

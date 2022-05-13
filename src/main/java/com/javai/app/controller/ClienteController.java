@@ -23,7 +23,7 @@ public class ClienteController {
     Redis redis = new Redis();
 
     @GetMapping("/cliente/{id}")
-    public String buscarCliente(@PathVariable("id") int id, Model model) {
+    public String buscarCliente(@PathVariable int id, Model model) {
         Cliente cliente;
         String clienteId = redis.read("id");
 
